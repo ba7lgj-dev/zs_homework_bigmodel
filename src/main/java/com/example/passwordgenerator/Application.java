@@ -10,28 +10,28 @@ import java.util.concurrent.Callable;
 @Command(name = "password-generator",
     mixinStandardHelpOptions = true,
     version = "1.0.0",
-    description = "Generates secure passwords based on configurable options.")
+    description = "根据配置选项生成安全密码")
 public class Application implements Callable<Integer> {
 
-    @Option(names = {"-l", "--length"}, description = "Password length (default: ${DEFAULT-VALUE})")
+    @Option(names = {"-l", "--length"}, description = "密码长度（默认: ${DEFAULT-VALUE}）")
     private int length = PasswordConfig.DEFAULT_LENGTH;
 
-    @Option(names = {"-U", "--no-uppercase"}, description = "Exclude uppercase characters")
+    @Option(names = {"-U", "--no-uppercase"}, description = "排除大写字母")
     private boolean excludeUppercase;
 
-    @Option(names = {"-L", "--no-lowercase"}, description = "Exclude lowercase characters")
+    @Option(names = {"-L", "--no-lowercase"}, description = "排除小写字母")
     private boolean excludeLowercase;
 
-    @Option(names = {"-D", "--no-digits"}, description = "Exclude digits")
+    @Option(names = {"-D", "--no-digits"}, description = "排除数字")
     private boolean excludeDigits;
 
-    @Option(names = {"-S", "--include-special"}, description = "Include special characters")
+    @Option(names = {"-S", "--include-special"}, description = "包含特殊字符")
     private boolean includeSpecial;
 
-    @Option(names = {"-C", "--custom"}, description = "Additional custom characters to include")
+    @Option(names = {"-C", "--custom"}, description = "额外自定义字符")
     private String customCharacters = "";
 
-    @Option(names = {"--ui"}, description = "Launch the Swing user interface")
+    @Option(names = {"--ui"}, description = "启动图形界面")
     private boolean launchUi;
 
     private final PasswordGenerator generator;
@@ -71,11 +71,11 @@ public class Application implements Callable<Integer> {
         try {
             String password = generator.generate(config);
             StrengthLevel level = evaluator.evaluate(password, config);
-            System.out.println("Generated password: " + password);
-            System.out.println("Strength: " + level.getDisplayName());
+            System.out.println("生成的密码: " + password);
+            System.out.println("密码强度: " + level.getDisplayName());
             return 0;
         } catch (IllegalArgumentException ex) {
-            System.err.println("Configuration error: " + ex.getMessage());
+            System.err.println("配置错误: " + ex.getMessage());
             return 1;
         }
     }

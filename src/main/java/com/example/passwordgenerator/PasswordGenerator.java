@@ -51,21 +51,21 @@ public class PasswordGenerator {
         int length = config.getLength();
         if (length < PasswordConfig.MIN_LENGTH || length > PasswordConfig.MAX_LENGTH) {
             throw new IllegalArgumentException(
-                "Password length must be between " + PasswordConfig.MIN_LENGTH + " and " + PasswordConfig.MAX_LENGTH + ".");
+                "密码长度必须在 " + PasswordConfig.MIN_LENGTH + " 到 " + PasswordConfig.MAX_LENGTH + " 之间。");
         }
 
         List<String> activeSets = config.getActiveCharacterSets();
         if (activeSets.size() < 3) {
-            throw new IllegalArgumentException("At least three character types must be selected.");
+            throw new IllegalArgumentException("至少需要选择三种字符类型。");
         }
 
         if (activeSets.stream().anyMatch(String::isBlank)) {
-            throw new IllegalArgumentException("Character sets cannot be blank.");
+            throw new IllegalArgumentException("字符集不能为空。");
         }
 
         int uniqueChars = combinedUniqueCharacters(activeSets);
         if (uniqueChars < 10) {
-            throw new IllegalArgumentException("Character pool is too small for secure generation.");
+            throw new IllegalArgumentException("可用字符池过小，无法生成安全密码。");
         }
     }
 

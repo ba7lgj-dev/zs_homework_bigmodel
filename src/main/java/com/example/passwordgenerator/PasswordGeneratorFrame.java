@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -25,7 +26,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 
 /**
- * Swing based UI for the password generator.
+ * 面向最终用户的 Swing 密码生成器界面。
  */
 public class PasswordGeneratorFrame extends JFrame {
 
@@ -51,7 +52,8 @@ public class PasswordGeneratorFrame extends JFrame {
 
         initializeLookAndFeel();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(480, 320));
+        // 更宽的默认窗口，便于容纳中文提示文本。
+        setMinimumSize(new Dimension(640, 360));
         buildUi();
         setLocationRelativeTo(null);
     }
@@ -60,7 +62,7 @@ public class PasswordGeneratorFrame extends JFrame {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ignored) {
-            // Fallback to default look and feel.
+            // 回退到默认外观即可，不影响主要功能。
         }
     }
 
@@ -106,7 +108,10 @@ public class PasswordGeneratorFrame extends JFrame {
         gbc.gridx = 1;
         customArea.setLineWrap(true);
         customArea.setWrapStyleWord(true);
-        panel.add(customArea, gbc);
+        // 使用滚动面板避免输入较长字符时界面被撑开。
+        JScrollPane customScrollPane = new JScrollPane(customArea);
+        customScrollPane.setPreferredSize(new Dimension(220, 60));
+        panel.add(customScrollPane, gbc);
 
         JButton generateButton = new JButton("生成密码");
         generateButton.addActionListener(e -> generatePassword());
@@ -135,6 +140,7 @@ public class PasswordGeneratorFrame extends JFrame {
     }
 
     private void generatePassword() {
+        // 根据表单选项构建密码生成配置。
         PasswordConfig config = PasswordConfig.builder()
             .length((Integer) lengthSpinner.getValue())
             .includeUppercase(uppercaseBox.isSelected())
@@ -145,6 +151,7 @@ public class PasswordGeneratorFrame extends JFrame {
             .build();
 
         try {
+            // 同步生成密码并评估强度。
             String password = generator.generate(config);
             passwordField.setText(password);
             StrengthLevel level = evaluator.evaluate(password, config);
