@@ -172,6 +172,10 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>ccp-common</module>
+        <module>ccp-core</module>
+        <module>ccp-miniprogram</module>
+        <module>ccp-admin</module>
     </modules>
     <packaging>pom</packaging>
 
