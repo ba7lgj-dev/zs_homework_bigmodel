@@ -60,24 +60,33 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.ba7lgj</groupId>
+            <artifactId>ccp-miniprogram</artifactId>
+        </dependency>
 
         <dependency>
-            <groupId>ccp-common</groupId>
+            <groupId>org.ba7lgj</groupId>
+            <artifactId>ccp-admin</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ba7lgj</groupId>
             <artifactId>ccp-common</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>ccp-core</groupId>
+            <groupId>org.ba7lgj</groupId>
             <artifactId>ccp-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>ccp-miniprogram</groupId>
+            <groupId>org.ba7lgj</groupId>
             <artifactId>ccp-miniprogram</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>ccp-admin</groupId>
+            <groupId>org.ba7lgj</groupId>
             <artifactId>ccp-admin</artifactId>
             <version>${project.version}</version>
         </dependency>

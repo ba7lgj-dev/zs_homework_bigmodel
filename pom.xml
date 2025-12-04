@@ -162,6 +162,30 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+
+
+            <dependency>
+                <groupId>org.ba7lgj</groupId>
+                <artifactId>ccp-miniprogram</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.ba7lgj</groupId>
+                <artifactId>ccp-admin</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ba7lgj</groupId>
+                <artifactId>ccp-common</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ba7lgj</groupId>
+                <artifactId>ccp-core</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
