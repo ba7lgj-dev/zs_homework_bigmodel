@@ -1,9 +1,6 @@
 package org.ba7lgj.ccp.miniprogram.controller;
 
 import java.util.Collections;
-
-
-import com.ruoyi.common.core.domain.model.LoginUser;
 import org.ba7lgj.ccp.common.domain.MiniUser;
 import org.ba7lgj.ccp.common.vo.MiniUserVO;
 import org.ba7lgj.ccp.core.service.IMiniUserService;
@@ -16,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.framework.web.service.TokenService;
-
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.domain.model.LoginUser;
 
 /**
  * 小程序登录接口。
@@ -58,12 +56,15 @@ public class CcpAppLoginController
         {
             miniUser = miniUserService.autoRegisterByOpenId(openId);
         }
+        SysUser sysUser = new SysUser();
+        sysUser.setUserId(miniUser.getId());
+        sysUser.setUserName("ccp_" + miniUser.getId());
+        sysUser.setNickName(miniUser.getNickName());
+
         LoginUser loginUser = new LoginUser();
         loginUser.setUserId(miniUser.getId());
-        loginUser.setUsername("ccp_" + miniUser.getId());
-        loginUser.setToken(null);
+        loginUser.setUser(sysUser);
         loginUser.setPermissions(Collections.emptySet());
-        loginUser.setUserType("ccpMini");
 
         String token = tokenService.createToken(loginUser);
 
