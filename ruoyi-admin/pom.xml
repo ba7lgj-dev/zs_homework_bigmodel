@@ -61,6 +61,27 @@
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>ccp-common</groupId>
+            <artifactId>ccp-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ccp-core</groupId>
+            <artifactId>ccp-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ccp-miniprogram</groupId>
+            <artifactId>ccp-miniprogram</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ccp-admin</groupId>
+            <artifactId>ccp-admin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
