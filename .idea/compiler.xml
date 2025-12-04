@@ -10,9 +10,9 @@
         <module name="ccp-common" />
         <module name="ruoyi-system" />
         <module name="ccp-admin" />
-        <module name="ruoyi-common" />
         <module name="ruoyi-generator" />
         <module name="ccp-core" />
+        <module name="ruoyi-common" />
         <module name="ruoyi-quartz" />
         <module name="ccp-miniprogram" />
         <module name="ruoyi-admin" />

@@ -1,7 +1,9 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
+// spring
+import org.springframework.data.repository.query.Param;
+
 import com.ruoyi.common.core.domain.entity.SysUser;
 
 /**
