@@ -71,6 +71,11 @@ public class LoginUser implements UserDetails
      */
     private SysUser user;
 
+    /**
+     * 用户类型（admin/miniapp等）
+     */
+    private String userType;
+
     public LoginUser()
     {
     }
@@ -87,6 +92,13 @@ public class LoginUser implements UserDetails
         this.deptId = deptId;
         this.user = user;
         this.permissions = permissions;
+    }
+
+    public LoginUser(SysUser user, Set<String> permissions, String userType)
+    {
+        this.user = user;
+        this.permissions = permissions;
+        this.userType = userType;
     }
 
     public Long getUserId()
@@ -256,6 +268,16 @@ public class LoginUser implements UserDetails
     public void setUser(SysUser user)
     {
         this.user = user;
+    }
+
+    public String getUserType()
+    {
+        return userType;
+    }
+
+    public void setUserType(String userType)
+    {
+        this.userType = userType;
     }
 
     @Override

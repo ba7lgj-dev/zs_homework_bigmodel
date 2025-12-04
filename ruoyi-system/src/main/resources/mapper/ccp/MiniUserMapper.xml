@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ccp.mapper.MiniUserMapper">
+
+    <resultMap id="MiniUserResult" type="com.ruoyi.ccp.domain.MiniUser">
+        <id property="id" column="id" />
+        <result property="openId" column="open_id" />
+        <result property="unionId" column="union_id" />
+        <result property="nickName" column="nick_name" />
+        <result property="avatarUrl" column="avatar_url" />
+        <result property="phone" column="phone" />
+        <result property="studentNo" column="student_no" />
+        <result property="realName" column="real_name" />
+        <result property="gender" column="gender" />
+        <result property="status" column="status" />
+        <result property="authStatus" column="auth_status" />
+        <result property="authFailReason" column="auth_fail_reason" />
+        <result property="reviewBy" column="review_by" />
+        <result property="reviewTime" column="review_time" />
+        <result property="adminRemark" column="admin_remark" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+    </resultMap>
+
+    <sql id="selectMiniUserColumns">
+        select id, open_id, union_id, nick_name, avatar_url, phone, student_no, real_name, gender, status, auth_status,
+        auth_fail_reason, review_by, review_time, admin_remark, create_time, update_time
+        from mini_user
+    </sql>
+
+    <select id="selectMiniUserById" parameterType="Long" resultMap="MiniUserResult">
+        <include refid="selectMiniUserColumns" />
+        where id = #{id}
+    </select>
+
+    <select id="selectMiniUserByOpenId" parameterType="String" resultMap="MiniUserResult">
+        <include refid="selectMiniUserColumns" />
+        where open_id = #{openId}
+        limit 1
+    </select>
+
+    <select id="selectMiniUserList" parameterType="com.ruoyi.ccp.domain.MiniUser" resultMap="MiniUserResult">
+        <include refid="selectMiniUserColumns" />
+        <where>
+            <if test="nickName != null and nickName != ''">
+                and nick_name like concat('%', #{nickName}, '%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="studentNo != null and studentNo != ''">
+                and student_no = #{studentNo}
+            </if>
+            <if test="authStatus != null">
+                and auth_status = #{authStatus}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <insert id="insertMiniUser" parameterType="com.ruoyi.ccp.domain.MiniUser" useGeneratedKeys="true" keyProperty="id">
+        insert into mini_user (open_id, union_id, nick_name, avatar_url, phone, student_no, real_name, gender, status,
+        auth_status, auth_fail_reason, review_by, review_time, admin_remark, create_time, update_time)
+        values (#{openId}, #{unionId}, #{nickName}, #{avatarUrl}, #{phone}, #{studentNo}, #{realName}, #{gender}, #{status},
+        #{authStatus}, #{authFailReason}, #{reviewBy}, #{reviewTime}, #{adminRemark}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="updateMiniUser" parameterType="com.ruoyi.ccp.domain.MiniUser">
+        update mini_user
+        <set>
+            <if test="openId != null">open_id = #{openId},</if>
+            <if test="unionId != null">union_id = #{unionId},</if>
+            <if test="nickName != null">nick_name = #{nickName},</if>
+            <if test="avatarUrl != null">avatar_url = #{avatarUrl},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="studentNo != null">student_no = #{studentNo},</if>
+            <if test="realName != null">real_name = #{realName},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="authStatus != null">auth_status = #{authStatus},</if>
+            <if test="authFailReason != null">auth_fail_reason = #{authFailReason},</if>
+            <if test="reviewBy != null">review_by = #{reviewBy},</if>
+            <if test="reviewTime != null">review_time = #{reviewTime},</if>
+            <if test="adminRemark != null">admin_remark = #{adminRemark},</if>
+            update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateMiniUserStatus">
+        update mini_user set status = #{status}, update_time = now() where id = #{id}
+    </update>
+
+    <update id="updateMiniUserReview" parameterType="com.ruoyi.ccp.domain.MiniUser">
+        update mini_user
+        <set>
+            auth_status = #{authStatus},
+            auth_fail_reason = #{authFailReason},
+            review_by = #{reviewBy},
+            review_time = #{reviewTime},
+            update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMiniUserById" parameterType="Long">
+        delete from mini_user where id = #{id}
+    </delete>
+
+    <delete id="deleteMiniUserByIds" parameterType="Long">
+        delete from mini_user where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
