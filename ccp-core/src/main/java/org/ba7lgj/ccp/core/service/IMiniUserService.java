@@ -1,9 +1,10 @@
 package org.ba7lgj.ccp.core.service;
 
-import java.util.Date;
 import java.util.List;
 import org.ba7lgj.ccp.common.domain.MiniUser;
 import org.ba7lgj.ccp.common.dto.MiniUserQueryDTO;
+import org.ba7lgj.ccp.common.dto.RealAuthReviewDTO;
+import org.ba7lgj.ccp.common.dto.RealAuthSubmitDTO;
 
 /**
  * 小程序用户业务接口。
@@ -24,7 +25,11 @@ public interface IMiniUserService
 
     int changeStatus(Long id, Integer status);
 
-    int reviewUser(Long id, Integer targetAuthStatus, String failReason, Long reviewBy, Date reviewTime);
+    int submitRealAuth(RealAuthSubmitDTO dto);
+
+    int reviewRealAuth(RealAuthReviewDTO dto);
+
+    Integer getRealAuthStatus(Long userId);
 
     int deleteMiniUserById(Long id);
 

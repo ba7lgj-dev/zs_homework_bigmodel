@@ -3,8 +3,8 @@ package org.ba7lgj.ccp.admin.controller;
 import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 import org.ba7lgj.ccp.common.domain.MiniUser;
-import org.ba7lgj.ccp.common.dto.MiniUserAuditDTO;
 import org.ba7lgj.ccp.common.dto.MiniUserQueryDTO;
+import org.ba7lgj.ccp.common.dto.RealAuthReviewDTO;
 import org.ba7lgj.ccp.core.service.IMiniUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,7 +45,9 @@ public class CcpUserController extends BaseController
     @GetMapping("/{id}")
     public AjaxResult getInfo(@PathVariable Long id)
     {
-        return AjaxResult.success(miniUserService.selectMiniUserById(id));
+        MiniUser user = miniUserService.selectMiniUserById(id);
+        maskIdCardNumber(user);
+        return AjaxResult.success(user);
     }
 
     @PreAuthorize("@ss.hasPermi('ccp:user:add')")
@@ -90,10 +92,10 @@ public class CcpUserController extends BaseController
 
     @PreAuthorize("@ss.hasPermi('ccp:user:review')")
     @PutMapping("/review")
-    public AjaxResult review(@RequestBody MiniUserAuditDTO auditDTO)
+    public AjaxResult review(@RequestBody RealAuthReviewDTO reviewDTO)
     {
-        Long reviewBy = SecurityUtils.getUserId();
-        return toAjax(miniUserService.reviewUser(auditDTO.getId(), auditDTO.getTargetAuthStatus(), auditDTO.getAuthFailReason(), reviewBy, new java.util.Date()));
+        reviewDTO.setReviewBy(SecurityUtils.getUserId());
+        return toAjax(miniUserService.reviewRealAuth(reviewDTO));
     }
 
     @PreAuthorize("@ss.hasPermi('ccp:user:export')")
@@ -101,7 +103,23 @@ public class CcpUserController extends BaseController
     public AjaxResult export(MiniUserQueryDTO query)
     {
         List<MiniUser> list = miniUserService.selectMiniUserExportList(query);
+        list.forEach(this::maskIdCardNumber);
         ExcelUtil<MiniUser> util = new ExcelUtil<>(MiniUser.class);
         return util.exportExcel(list, "小程序用户数据");
+    }
+
+    private void maskIdCardNumber(MiniUser user)
+    {
+        if (user == null)
+        {
+            return;
+        }
+        String idCardNumber = user.getIdCardNumber();
+        if (idCardNumber != null && idCardNumber.length() > 8)
+        {
+            String masked = idCardNumber.substring(0, 3)
+                    + "****" + idCardNumber.substring(idCardNumber.length() - 3);
+            user.setIdCardNumber(masked);
+        }
     }
 }

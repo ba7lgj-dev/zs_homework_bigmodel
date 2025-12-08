@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ba7lgj.ccp.common.domain.MiniUser;
 import org.ba7lgj.ccp.common.dto.MiniUserQueryDTO;
-import org.ba7lgj.ccp.common.enums.AuthStatusEnum;
+import org.ba7lgj.ccp.common.dto.RealAuthReviewDTO;
+import org.ba7lgj.ccp.common.dto.RealAuthSubmitDTO;
+import org.ba7lgj.ccp.common.enums.RealAuthStatusEnum;
 import org.ba7lgj.ccp.core.mapper.MiniUserMapper;
 import org.ba7lgj.ccp.core.service.IMiniUserService;
 
@@ -64,7 +66,7 @@ public class MiniUserServiceImpl implements IMiniUserService
         MiniUser miniUser = new MiniUser();
         miniUser.setOpenId(openId);
         miniUser.setStatus(1);
-        miniUser.setAuthStatus(AuthStatusEnum.UN_AUTH.getCode());
+        miniUser.setRealAuthStatus(RealAuthStatusEnum.UN_AUTH.getCode());
         miniUserMapper.insertMiniUser(miniUser);
         return miniUser;
     }
@@ -85,24 +87,46 @@ public class MiniUserServiceImpl implements IMiniUserService
     }
 
     @Override
-    public int reviewUser(Long id, Integer targetAuthStatus, String failReason, Long reviewBy, Date reviewTime)
+    public int submitRealAuth(RealAuthSubmitDTO dto)
     {
-        if (targetAuthStatus == null || (!AuthStatusEnum.APPROVED.getCode().equals(targetAuthStatus)
-                && !AuthStatusEnum.REJECTED.getCode().equals(targetAuthStatus)))
+        MiniUser user = new MiniUser();
+        user.setId(dto.getUserId());
+        user.setIdCardName(dto.getIdCardName());
+        user.setIdCardNumber(dto.getIdCardNumber());
+        user.setFaceImageUrl(dto.getFaceImageUrl());
+        user.setRealAuthStatus(RealAuthStatusEnum.PENDING.getCode());
+        user.setRealAuthFailReason(null);
+        user.setRealAuthReviewBy(null);
+        user.setRealAuthReviewTime(null);
+        return miniUserMapper.updateMiniUser(user);
+    }
+
+    @Override
+    public int reviewRealAuth(RealAuthReviewDTO dto)
+    {
+        if (dto.getTargetStatus() == null || (RealAuthStatusEnum.APPROVED.getCode() != dto.getTargetStatus()
+                && RealAuthStatusEnum.REJECTED.getCode() != dto.getTargetStatus()))
         {
-            throw new IllegalArgumentException("targetAuthStatus must be 2 or 3");
+            throw new IllegalArgumentException("targetStatus must be 2 or 3");
         }
-        if (AuthStatusEnum.REJECTED.getCode().equals(targetAuthStatus) && StringUtils.isBlank(failReason))
+        if (RealAuthStatusEnum.REJECTED.getCode() == dto.getTargetStatus() && StringUtils.isBlank(dto.getFailReason()))
         {
             throw new IllegalArgumentException("failReason is required when rejected");
         }
         MiniUser user = new MiniUser();
-        user.setId(id);
-        user.setAuthStatus(targetAuthStatus);
-        user.setAuthFailReason(failReason);
-        user.setReviewBy(reviewBy);
-        user.setReviewTime(reviewTime);
+        user.setId(dto.getUserId());
+        user.setRealAuthStatus(dto.getTargetStatus());
+        user.setRealAuthFailReason(dto.getFailReason());
+        user.setRealAuthReviewBy(dto.getReviewBy());
+        user.setRealAuthReviewTime(new Date());
         return miniUserMapper.updateMiniUser(user);
+    }
+
+    @Override
+    public Integer getRealAuthStatus(Long userId)
+    {
+        MiniUser miniUser = selectMiniUserById(userId);
+        return miniUser == null ? null : miniUser.getRealAuthStatus();
     }
 
     @Override
