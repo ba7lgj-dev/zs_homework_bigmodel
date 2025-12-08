@@ -12,10 +12,9 @@ public class MiniUserQueryDTO implements Serializable
 
     private String nickName;
     private String phone;
-    private String studentNo;
     private Integer gender;
     private Integer status;
-    private Integer authStatus;
+    private Integer realAuthStatus;
     private Date beginTime;
     private Date endTime;
 
@@ -39,16 +38,6 @@ public class MiniUserQueryDTO implements Serializable
         this.phone = phone;
     }
 
-    public String getStudentNo()
-    {
-        return studentNo;
-    }
-
-    public void setStudentNo(String studentNo)
-    {
-        this.studentNo = studentNo;
-    }
-
     public Integer getGender()
     {
         return gender;
@@ -69,14 +58,14 @@ public class MiniUserQueryDTO implements Serializable
         this.status = status;
     }
 
-    public Integer getAuthStatus()
+    public Integer getRealAuthStatus()
     {
-        return authStatus;
+        return realAuthStatus;
     }
 
-    public void setAuthStatus(Integer authStatus)
+    public void setRealAuthStatus(Integer realAuthStatus)
     {
-        this.authStatus = authStatus;
+        this.realAuthStatus = realAuthStatus;
     }
 
     public Date getBeginTime()

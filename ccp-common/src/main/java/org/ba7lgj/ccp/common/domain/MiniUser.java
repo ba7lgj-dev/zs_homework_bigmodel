@@ -16,14 +16,17 @@ public class MiniUser implements Serializable
     private String nickName;
     private String avatarUrl;
     private String phone;
-    private String studentNo;
     private String realName;
+    private String idCardName;
+    private String idCardNumber;
+    private String faceImageUrl;
+    private String faceVerifyResult;
     private Integer gender;
     private Integer status;
-    private Integer authStatus;
-    private String authFailReason;
-    private Long reviewBy;
-    private Date reviewTime;
+    private Integer realAuthStatus;
+    private String realAuthFailReason;
+    private Long realAuthReviewBy;
+    private Date realAuthReviewTime;
     private String adminRemark;
     private Date createTime;
     private Date updateTime;
@@ -88,16 +91,6 @@ public class MiniUser implements Serializable
         this.phone = phone;
     }
 
-    public String getStudentNo()
-    {
-        return studentNo;
-    }
-
-    public void setStudentNo(String studentNo)
-    {
-        this.studentNo = studentNo;
-    }
-
     public String getRealName()
     {
         return realName;
@@ -106,6 +99,46 @@ public class MiniUser implements Serializable
     public void setRealName(String realName)
     {
         this.realName = realName;
+    }
+
+    public String getIdCardName()
+    {
+        return idCardName;
+    }
+
+    public void setIdCardName(String idCardName)
+    {
+        this.idCardName = idCardName;
+    }
+
+    public String getIdCardNumber()
+    {
+        return idCardNumber;
+    }
+
+    public void setIdCardNumber(String idCardNumber)
+    {
+        this.idCardNumber = idCardNumber;
+    }
+
+    public String getFaceImageUrl()
+    {
+        return faceImageUrl;
+    }
+
+    public void setFaceImageUrl(String faceImageUrl)
+    {
+        this.faceImageUrl = faceImageUrl;
+    }
+
+    public String getFaceVerifyResult()
+    {
+        return faceVerifyResult;
+    }
+
+    public void setFaceVerifyResult(String faceVerifyResult)
+    {
+        this.faceVerifyResult = faceVerifyResult;
     }
 
     public Integer getGender()
@@ -128,44 +161,44 @@ public class MiniUser implements Serializable
         this.status = status;
     }
 
-    public Integer getAuthStatus()
+    public Integer getRealAuthStatus()
     {
-        return authStatus;
+        return realAuthStatus;
     }
 
-    public void setAuthStatus(Integer authStatus)
+    public void setRealAuthStatus(Integer realAuthStatus)
     {
-        this.authStatus = authStatus;
+        this.realAuthStatus = realAuthStatus;
     }
 
-    public String getAuthFailReason()
+    public String getRealAuthFailReason()
     {
-        return authFailReason;
+        return realAuthFailReason;
     }
 
-    public void setAuthFailReason(String authFailReason)
+    public void setRealAuthFailReason(String realAuthFailReason)
     {
-        this.authFailReason = authFailReason;
+        this.realAuthFailReason = realAuthFailReason;
     }
 
-    public Long getReviewBy()
+    public Long getRealAuthReviewBy()
     {
-        return reviewBy;
+        return realAuthReviewBy;
     }
 
-    public void setReviewBy(Long reviewBy)
+    public void setRealAuthReviewBy(Long realAuthReviewBy)
     {
-        this.reviewBy = reviewBy;
+        this.realAuthReviewBy = realAuthReviewBy;
     }
 
-    public Date getReviewTime()
+    public Date getRealAuthReviewTime()
     {
-        return reviewTime;
+        return realAuthReviewTime;
     }
 
-    public void setReviewTime(Date reviewTime)
+    public void setRealAuthReviewTime(Date realAuthReviewTime)
     {
-        this.reviewTime = reviewTime;
+        this.realAuthReviewTime = realAuthReviewTime;
     }
 
     public String getAdminRemark()

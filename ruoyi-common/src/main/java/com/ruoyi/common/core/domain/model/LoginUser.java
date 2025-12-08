@@ -71,6 +71,11 @@ public class LoginUser implements UserDetails
      */
     private SysUser user;
 
+    /**
+     * 实名认证状态
+     */
+    private Integer realAuthStatus;
+
     public LoginUser()
     {
     }
@@ -87,6 +92,16 @@ public class LoginUser implements UserDetails
         this.deptId = deptId;
         this.user = user;
         this.permissions = permissions;
+    }
+
+    public Integer getRealAuthStatus()
+    {
+        return realAuthStatus;
+    }
+
+    public void setRealAuthStatus(Integer realAuthStatus)
+    {
+        this.realAuthStatus = realAuthStatus;
     }
 
     public Long getUserId()

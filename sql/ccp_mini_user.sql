@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS ccp_mini_user (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '主键',
+    open_id VARCHAR(64) NOT NULL COMMENT '微信 openId',
+    union_id VARCHAR(64) DEFAULT NULL COMMENT '微信 unionId',
+    nick_name VARCHAR(100) DEFAULT NULL COMMENT '昵称',
+    avatar_url VARCHAR(255) DEFAULT NULL COMMENT '头像',
+    phone VARCHAR(20) DEFAULT NULL COMMENT '手机号',
+    real_name VARCHAR(50) DEFAULT NULL COMMENT '真实姓名',
+    id_card_name VARCHAR(50) DEFAULT NULL COMMENT '身份证姓名',
+    id_card_number VARCHAR(32) DEFAULT NULL COMMENT '身份证号',
+    face_image_url VARCHAR(255) DEFAULT NULL COMMENT '人脸图片地址',
+    face_verify_result VARCHAR(255) DEFAULT NULL COMMENT '人脸比对结果',
+    gender TINYINT DEFAULT NULL COMMENT '性别',
+    status TINYINT DEFAULT 1 COMMENT '状态（1正常）',
+    real_auth_status TINYINT DEFAULT 0 COMMENT '实名认证状态 0未认证 1待审核 2已认证 3不通过',
+    real_auth_fail_reason VARCHAR(255) DEFAULT NULL COMMENT '实名认证失败原因',
+    real_auth_review_by BIGINT DEFAULT NULL COMMENT '实名认证审核人',
+    real_auth_review_time DATETIME DEFAULT NULL COMMENT '实名认证审核时间',
+    admin_remark VARCHAR(255) DEFAULT NULL COMMENT '管理员备注',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='小程序用户';
